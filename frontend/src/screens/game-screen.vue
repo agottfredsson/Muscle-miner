@@ -3,7 +3,7 @@
     <background-image image="1920.jpg" />
 
     <p id="t">Muscle miner {{ this.$store.state.clicks }}</p>
-
+    <Shop id="shop"></Shop>
     <div id="gameWindow">
       <div v-if="show" style="cursor: pointer">
         <img
@@ -25,15 +25,22 @@
 
 <script>
 import backgroundImage from "../components/background.vue";
-
+import Shop from "../components/Shop.vue";
 export default {
   components: {
     backgroundImage,
+    Shop,
   },
   methods: {
     clickMethod() {
       this.$store.commit("increment");
       this.show = !this.show;
+      this.animation = !this.animation;
+      const webSocket = new WebSocket("ws://localhost:3000");
+
+      webSocket.addEventListener("open", () => {
+        webSocket.send(this.$store.state.clicks);
+      });
     },
   },
   data() {
@@ -66,5 +73,8 @@ export default {
 
 #image {
   height: 50vh;
+}
+#shop {
+  right: 120px;
 }
 </style>

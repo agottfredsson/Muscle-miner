@@ -3,9 +3,6 @@
     <h1>START SCREEN</h1>
 
     <router-link to="/game">Play game</router-link>
-
-    <input v-model="userName" placeholder="Enter your name" />
-    <input type="button" value="OK" @click="addUser()" />
   </div>
 </template>
 

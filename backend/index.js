@@ -6,10 +6,19 @@ const app = express();
 const cors = require("cors");
 app.use(express.json());
 app.use(cors());
-
+const ws = require("ws");
+const webSocketServer = new ws.Server({ port: 3001 });
 const expressWs = require("express-ws")(app);
 
 let database;
+
+webSocketServer.on("connection", (webSocket) => {
+  console.log("Client connected");
+
+  setInterval(() => {
+    webSocket.send("Hello World!");
+  }, 1000);
+});
 
 sqlite
   .open({ driver: sqlite3.Database, filename: "muscle-miner.sqlite" })
