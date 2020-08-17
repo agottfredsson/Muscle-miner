@@ -12,31 +12,37 @@
         <img id="image" src="../assets/images/original-1.png" @click="clickMethod()" />
       </div>
     </div>
+    <Shop></Shop>
   </div>
 </template>
 
 
 <script>
-import backgroundImage from "../components/background.vue";
-
+import Shop from "../components/Shop.vue";
 export default {
   components: {
-    backgroundImage
+    Shop,
   },
   methods: {
     clickMethod() {
       this.$store.commit("increment");
       this.show = !this.show;
       this.animation = !this.animation;
-    }
+
+      const webSocket = new WebSocket("ws://localhost:3000");
+
+      webSocket.addEventListener("open", () => {
+        webSocket.send("YOYO");
+      });
+    },
   },
   data() {
     return {
       myImage: "../assets/images/original-1.png",
       strength: 1,
-      show: false
+      show: false,
     };
-  }
+  },
 };
 </script>
 
