@@ -1,23 +1,34 @@
 <template>
   <div class="game">
     <h1>Muscle miner</h1>
-
-    <div v-if="animation">
-      <img id="pic" src="../assets/images/4.jpg" @click="meme()" />
+    <div id="pics">
+      <div v-if="animation">
+        <img id="pic" src="../assets/images/4.jpg" @click="meme()" />
+      </div>
+      <div v-else>
+        <img id="pic" src="../assets/images/3.jpg" @click="meme()" />
+      </div>
     </div>
-    <div v-else>
-      <img id="pic" src="../assets/images/3.jpg" @click="meme()" />
-    </div>
+    <Shop></Shop>
   </div>
 </template>
 
 
 <script>
+import Shop from "../components/Shop.vue";
 export default {
-  components: {},
+  components: {
+    Shop,
+  },
   methods: {
     meme() {
       this.animation = !this.animation;
+
+      const webSocket = new WebSocket("ws://localhost:3000");
+
+      webSocket.addEventListener("open", () => {
+        webSocket.send("YOYO");
+      });
     },
   },
   data() {
