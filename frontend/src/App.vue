@@ -4,12 +4,24 @@
   </div>
 </template>
 
+<script>
+export default {
+  created() {
+    fetch("http://localhost:3000/")
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+
+        //this.$store.commit("fetch", x);
+      });
+  },
+};
+</script>
 
 <style>
-
 * {
-margin: 0;
-padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 #app {
@@ -19,5 +31,4 @@ padding: 0;
   text-align: center;
   color: #2c3e50;
 }
-
 </style>

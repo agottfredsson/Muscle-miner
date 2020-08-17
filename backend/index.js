@@ -1,11 +1,13 @@
 const express = require("express");
 const sqlite = require("sqlite");
 const sqlite3 = require("sqlite3");
+const app = express();
 
-//const cors = require("cors");
+const cors = require("cors");
+app.use(express.json());
+app.use(cors());
 
-var app = express();
-var expressWs = require("express-ws")(app);
+const expressWs = require("express-ws")(app);
 
 let database;
 
@@ -14,6 +16,23 @@ sqlite
   .then((database_) => {
     database = database_;
   });
+
+app.get("/", (request, response) => {
+  database.all("SELECT * FROM users").then((users) => {
+    response.send(users);
+  });
+});
+
+app.post("/:userName", (request, response) => {
+  database
+    .run("INSERT INTO users (name, score) VALUES (?, ?)", [
+      request.params.userName,
+      0,
+    ])
+    .then((users) => {
+      response.send(users);
+    });
+});
 
 app.use(function (req, res, next) {
   console.log("middleware");
