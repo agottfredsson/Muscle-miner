@@ -10,10 +10,10 @@
       </transition>
 
       <div v-if="show" style="cursor: pointer">
-        <img id="image" src="../assets/images/original-2.png" @click="clickMethod()" />
+        <img id="image" :src="getImgUrl(1)" @click="clickMethod()" />
       </div>
       <div v-else style="cursor: pointer">
-        <img id="image" src="../assets/images/original-1.png" @click="clickMethod()" />
+        <img id="image" :src="getImgUrl(0)" @click="clickMethod()" />
       </div>
     </div>
   </div>
@@ -29,6 +29,10 @@ export default {
     Shop,
   },
   methods: {
+    getImgUrl(x) {
+      return require("../assets/images" +
+        this.images[this.$store.state.userState][x]);
+    },
     clickMethod() {
       this.show = !this.show;
 
@@ -57,6 +61,16 @@ export default {
       strength: 1,
       show: false,
       animation: true,
+      images: [
+        ["/original-1.png", "/original-2.png"],
+        ["/glasses-1.png", "/glasses-2.png"],
+        ["/glasses-vac-1.png", "/glasses-vac-2.png"],
+        ["/glasses-chain-1.png", "/glasses-chain-2.png"],
+        ["/glasses-chain-vac-1.png", "/glasses-chain-vac-2.png"],
+        ["/chain-1.png", "/chain-2.png"],
+        ["/vac-chain-1.png", "/vac-chain-2.png"],
+        ["/vac-1.png", "/vac-2.png"],
+      ],
     };
   },
 };
