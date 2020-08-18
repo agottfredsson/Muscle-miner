@@ -1,7 +1,10 @@
 <template>
   <div class="container">
-    <p class="coins">Coins: {{this.$store.state.coins}}</p>
-    <b-button type="is-info" @click="isHidden = !isHidden">Shop</b-button>
+    <img
+      id="shopLogo"
+      src="../assets/images/shopping-cart.png"
+      @click="isHidden = !isHidden"
+    />
 
     <div v-if="isHidden">
       <div class="columns is-mobile">
@@ -12,7 +15,9 @@
             <p>Do you even drink bro?</p>
             <br />
           </div>
-          <b-button @click="shopBTN(drink)" type="is-warning">{{this.drink}} coins</b-button>
+          <b-button @click="shopBTN(drink)" type="is-warning"
+            >{{ this.drink }} coins</b-button
+          >
         </div>
         <div class="column is-one-quarter">
           <img id="image" src="../assets/images/bar.png" />
@@ -20,7 +25,9 @@
             <h1>Protein Bar</h1>
             <p>Protein is the key for every lift</p>
           </div>
-          <b-button @click="shopBTN(bar)" type="is-warning">{{this.bar}} coins</b-button>
+          <b-button @click="shopBTN(bar)" type="is-warning"
+            >{{ this.bar }} coins</b-button
+          >
         </div>
       </div>
       <div class="columns is-mobile">
@@ -31,7 +38,9 @@
             <p>The heavy shit</p>
             <br />
           </div>
-          <b-button @click="shopBTN(syringe)" type="is-warning">{{this.syringe}} coins</b-button>
+          <b-button @click="shopBTN(syringe)" type="is-warning"
+            >{{ this.syringe }} coins</b-button
+          >
         </div>
         <div class="column is-one-quarter">
           <img id="image" src="../assets/images/glasses.png" />
@@ -39,7 +48,9 @@
             <h1>Sunglasses</h1>
             <p>Need to protect those eyes</p>
           </div>
-          <b-button @click="shopBTN(sunGlasses)" type="is-warning">{{this.sunGlasses}} coins</b-button>
+          <b-button @click="shopBTN(sunGlasses)" type="is-warning"
+            >{{ this.sunGlasses }} coins</b-button
+          >
         </div>
       </div>
       <div class="columns is-mobile">
@@ -49,7 +60,9 @@
             <h1>Bandana</h1>
             <p>Why not?!</p>
           </div>
-          <b-button @click="shopBTN(bandana)" type="is-warning">{{this.bandana}} coins</b-button>
+          <b-button @click="shopBTN(bandana)" type="is-warning"
+            >{{ this.bandana }} coins</b-button
+          >
         </div>
         <div class="column is-one-quarter">
           <img id="image" src="../assets/images/chain.png" />
@@ -57,7 +70,9 @@
             <h1>Gold Chain</h1>
             <p>Just epiq</p>
           </div>
-          <b-button @click="shopBTN(goldChain)" type="is-warning">{{this.goldChain}} coins</b-button>
+          <b-button @click="shopBTN(goldChain)" type="is-warning"
+            >{{ this.goldChain }} coins</b-button
+          >
         </div>
       </div>
     </div>
@@ -73,14 +88,18 @@ export default {
       isHidden: false,
       drink: 5,
       bar: 200,
-      syringe: 5,
+      syringe: 3,
       sunGlasses: 5,
       bandana: 200,
       goldChain: 5000,
     };
   },
   methods: {
+    hide() {
+      console.log("hiden");
+    },
     shopBTN(value) {
+      console.log("shop button", value);
       switch (value) {
         case this.drink:
           if (this.$store.state.coins < this.drink) {
@@ -131,6 +150,11 @@ export default {
 </script>
 
 <style scoped>
+#logo {
+  height: 85px;
+  width: 85px;
+}
+
 .columns {
   margin-top: 10px;
   column-gap: 10px;
@@ -146,9 +170,18 @@ export default {
   position: relative;
   color: white;
   font-size: 2rem;
+  align-self: center;
+  margin-top: 22px;
 }
 #image {
   width: 50px;
   margin-right: 250px;
+}
+#shopLogo {
+  height: 80px;
+  width: 80px;
+}
+#shopLogo:hover {
+  transform: scale(1.3);
 }
 </style>
