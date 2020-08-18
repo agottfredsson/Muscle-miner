@@ -43,7 +43,6 @@
 <script>
 import { ParticlesBg } from "particles-bg-vue";
 import highscore from "../components/highscore.vue";
-
 import face from "../assets/images/face.png";
 import { Volume2Icon, VolumeXIcon } from "vue-feather-icons";
 
