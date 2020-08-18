@@ -43,15 +43,7 @@
         </div>
       </div>
       <div class="columns is-mobile">
-        <div class="column is-one-quarter is-offset-3">
-          <img id="image" src="../assets/images/bar.png" />
-          <div id="textArea">
-            <h1>Bandana</h1>
-            <p>Why not?!</p>
-          </div>
-          <b-button @click="shopBTN(bandana)" type="is-warning">{{this.bandana}} coins</b-button>
-        </div>
-        <div class="column is-one-quarter">
+        <div class="column is-half is-3 is-offset-3">
           <img id="image" src="../assets/images/chain.png" />
           <div id="textArea">
             <h1>Gold Chain</h1>
@@ -63,20 +55,18 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: "Shop",
-
   data() {
     return {
       isHidden: false,
-      drink: 5,
-      bar: 200,
-      syringe: 5,
-      sunGlasses: 5,
-      bandana: 200,
-      goldChain: 5000,
+      drink: 1,
+      bar: 2,
+      syringe: 3,
+      sunGlasses: 4,
+      bandana: 5,
+      goldChain: 6,
     };
   },
   methods: {
@@ -88,7 +78,6 @@ export default {
           }
           this.$store.commit("coinValue", this.drink);
           this.$store.commit("changeStrength", 1);
-
           break;
         case this.bar:
           if (this.$store.state.coins < this.bar) {
@@ -97,32 +86,93 @@ export default {
           this.$store.commit("coinValue", this.bar);
           break;
         case this.syringe:
-          if (this.$store.state.coins < this.syringe) {
+          if (
+            this.$store.state.coins < this.syringe ||
+            this.$store.state.userState === 7 ||
+            this.$store.state.userState === 6 ||
+            this.$store.state.userState === 2 ||
+            this.$store.state.userState === 4
+          ) {
             break;
           }
           this.$store.commit("coinValue", this.syringe);
-          this.$store.commit("changeUserState", 7);
+
+          switch (this.$store.state.userState) {
+            case 0:
+              this.$store.commit("changeUserState", 7);
+              break;
+            case 1:
+              this.$store.commit("changeUserState", 2);
+              break;
+            case 3:
+              this.$store.commit("changeUserState", 4);
+              break;
+            case 5:
+              this.$store.commit("changeUserState", 6);
+              break;
+            default:
+              break;
+          }
           break;
+
         case this.sunGlasses:
-          if (this.$store.state.coins < this.sunGlasses) {
+          if (
+            this.$store.state.coins < this.sunGlasses ||
+            this.$store.state.userState === 1 ||
+            this.$store.state.userState === 2 ||
+            this.$store.state.userState === 3 ||
+            this.$store.state.userState === 4
+          ) {
             break;
           }
           this.$store.commit("coinValue", this.sunGlasses);
 
-          break;
-        case this.bandana:
-          if (this.$store.state.coins < this.bandana) {
-            break;
+          switch (this.$store.state.userState) {
+            case 0:
+              this.$store.commit("changeUserState", 1);
+              break;
+            case 5:
+              this.$store.commit("changeUserState", 3);
+              break;
+            case 6:
+              this.$store.commit("changeUserState", 4);
+              break;
+            case 7:
+              this.$store.commit("changeUserState", 2);
+              break;
+            default:
+              break;
           }
-          this.$store.commit("coinValue", this.bandana);
           break;
+
         case this.goldChain:
-          if (this.$store.state.coins < this.goldChain) {
+          if (
+            this.$store.state.coins < this.goldChain ||
+            this.$store.state.userState === 5 ||
+            this.$store.state.userState === 3 ||
+            this.$store.state.userState === 4 ||
+            this.$store.state.userState === 6
+          ) {
             break;
           }
           this.$store.commit("coinValue", this.goldChain);
-          break;
-        default:
+
+          switch (this.$store.state.userState) {
+            case 0:
+              this.$store.commit("changeUserState", 5);
+              break;
+            case 1:
+              this.$store.commit("changeUserState", 3);
+              break;
+            case 2:
+              this.$store.commit("changeUserState", 4);
+              break;
+            case 7:
+              this.$store.commit("changeUserState", 6);
+              break;
+            default:
+              break;
+          }
           break;
       }
     },
