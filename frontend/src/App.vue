@@ -11,8 +11,6 @@ export default {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-
-        //this.$store.commit("fetch", x);
       });
   },
 };

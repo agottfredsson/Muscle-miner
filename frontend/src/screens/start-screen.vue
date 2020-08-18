@@ -12,6 +12,7 @@
 export default {
   name: "Start",
   components: {},
+
   data() {
     return {
       userName: "",
@@ -24,7 +25,8 @@ export default {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
+          console.log(result.lastID);
+          this.$store.commit("setId", result.lastID);
         });
     },
   },

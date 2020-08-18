@@ -1,10 +1,14 @@
 <template>
   <div id="content">
-    <background-image image="1920.jpg" />
+    <background-image image="2776.jpg" />
 
-    <p id="t">Muscle miner {{ this.$store.state.clicks }}</p>
+    <p id="t">Muscles gained: {{ this.$store.state.clicks }}lbs</p>
     <Shop id="shop"></Shop>
     <div id="gameWindow">
+      <transition name="slide-fade">
+        <p id="indicator" v-if="!animation">+1 lbs</p>
+      </transition>
+
       <div v-if="show" style="cursor: pointer">
         <img
           id="image"
@@ -26,6 +30,7 @@
 <script>
 import backgroundImage from "../components/background.vue";
 import Shop from "../components/Shop.vue";
+
 export default {
   components: {
     backgroundImage,
@@ -33,14 +38,25 @@ export default {
   },
   methods: {
     clickMethod() {
-      this.$store.commit("increment");
       this.show = !this.show;
-      this.animation = !this.animation;
-      const webSocket = new WebSocket("ws://localhost:3000");
 
-      webSocket.addEventListener("open", () => {
-        webSocket.send(this.$store.state.clicks);
-      });
+      if (!this.show) {
+        this.$store.commit("increment");
+        const webSocket = new WebSocket("ws://localhost:3000");
+
+        const obj = {
+          score: this.$store.state.clicks,
+          id: this.$store.state.userId,
+        };
+
+        webSocket.addEventListener("open", () => {
+          webSocket.send(JSON.stringify(obj));
+        });
+        this.animation = false;
+        setTimeout(() => {
+          this.animation = true;
+        }, 250);
+      }
     },
   },
   data() {
@@ -48,6 +64,7 @@ export default {
       myImage: "../assets/images/original-1.png",
       strength: 1,
       show: false,
+      animation: true,
     };
   },
 };
@@ -76,5 +93,22 @@ export default {
 }
 #shop {
   right: 120px;
+}
+
+#indicator {
+  font-size: 22px;
+  color: white;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(10px);
+  opacity: 0;
 }
 </style>

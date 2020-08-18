@@ -7,18 +7,10 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 const ws = require("ws");
-const webSocketServer = new ws.Server({ port: 3001 });
+const webSocket = new ws.Server({ port: 3001 });
 const expressWs = require("express-ws")(app);
 
 let database;
-
-webSocketServer.on("connection", (webSocket) => {
-  console.log("Client connected");
-
-  setInterval(() => {
-    webSocket.send("Hello World!");
-  }, 1000);
-});
 
 sqlite
   .open({ driver: sqlite3.Database, filename: "muscle-miner.sqlite" })
@@ -45,6 +37,7 @@ app.post("/:userName", (request, response) => {
 
 app.use(function (req, res, next) {
   console.log("middleware");
+
   req.testing = "testing";
   return next();
 });
@@ -55,10 +48,18 @@ app.get("/", function (req, res, next) {
 });
 
 app.ws("/", function (ws, req) {
-  ws.on("message", function (msg) {
-    console.log(msg);
+  ws.on("message", function (obj) {
+    const userObj = JSON.parse(obj);
+
+    database
+      .run("UPDATE users SET score=(?) WHERE userId=(?)", [
+        userObj.score,
+        userObj.id,
+      ])
+      .then((users) => {
+        response.send(users);
+      });
   });
-  console.log("socket", req.testing);
 });
 
 app.listen(3000);
