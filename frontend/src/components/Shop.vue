@@ -73,8 +73,8 @@ export default {
       isHidden: false,
       drink: 5,
       bar: 200,
-      syringe: 1000,
-      sunGlasses: 500,
+      syringe: 5,
+      sunGlasses: 5,
       bandana: 200,
       goldChain: 5000,
     };
@@ -86,40 +86,41 @@ export default {
           if (this.$store.state.coins < this.drink) {
             break;
           }
-          this.$store.state.coins -= this.drink;
+          this.$store.commit("coinValue", this.drink);
+          this.$store.commit("changeStrength", 1);
 
           break;
         case this.bar:
           if (this.$store.state.coins < this.bar) {
             break;
           }
-          this.$store.state.coins -= this.bar;
-
+          this.$store.commit("coinValue", this.bar);
           break;
         case this.syringe:
           if (this.$store.state.coins < this.syringe) {
             break;
           }
-          this.$store.state.coins -= this.syringe;
+          this.$store.commit("coinValue", this.syringe);
+          this.$store.commit("changeUserState", 7);
           break;
         case this.sunGlasses:
           if (this.$store.state.coins < this.sunGlasses) {
             break;
           }
-          this.$store.state.coins -= this.sunGlasses;
+          this.$store.commit("coinValue", this.sunGlasses);
+
           break;
         case this.bandana:
           if (this.$store.state.coins < this.bandana) {
             break;
           }
-          this.$store.state.coins -= this.bandana;
+          this.$store.commit("coinValue", this.bandana);
           break;
         case this.goldChain:
           if (this.$store.state.coins < this.goldChain) {
             break;
           }
-          this.$store.state.coins -= this.goldChain;
-
+          this.$store.commit("coinValue", this.goldChain);
           break;
         default:
           break;
