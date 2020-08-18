@@ -4,14 +4,18 @@
     <particles-bg type="custom" :config="config" :bg="true" />
 
     <h1 class="wordart">MUSCLE MINER</h1>
-    <div class="inputbox">
-      <input v-model="userName" placeholder="Type your name" />
-      <input type="button" value="OK" @click="addUser()" />
-    </div>
 
     <div class="container">
       <div class="button-class">
-        <button @click="$router.push('game')">Play Game</button>
+        <button v-if="!isNew" @click="$router.push('game')">Continue</button>
+        <div v-if="collapse" class="spaces">
+          <input v-model="userName" placeholder="Type your name" />
+          <input type="button" value="OK" @click="addUser()" />
+        </div>
+        <div v-else class="spaces">
+          <button @click="newGame()">New Game</button>
+        </div>
+
         <div class="spaces">
           <button @click="$router.push('highscore')">Highscore</button>
         </div>
@@ -28,7 +32,18 @@ import face from "../assets/images/face.png";
 export default {
   name: "start",
   components: {
-    ParticlesBg
+    ParticlesBg,
+  },
+  created() {
+    console.log("before", this.$store.state);
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      console.log(user);
+      this.isNew = false;
+      this.$store.commit("setStateObj", user);
+      console.log("after", this.$store.state);
+    }
   },
   data: function() {
     return {
@@ -44,31 +59,35 @@ export default {
         scale: [0.1, 0.4],
         position: "all",
         cross: "dead",
-        random: 15
+        random: 15,
       },
-      userName: ""
+      userName: "",
+      collapse: false,
+      isNew: true,
     };
   },
   methods: {
+    newGame() {
+      this.collapse = true;
+    },
     addUser() {
+      localStorage.setItem("user", null);
+      this.$store.commit("resetState");
       fetch(`http://localhost:3000/${this.userName}`, {
-        method: "POST"
+        method: "POST",
       })
-        .then(response => response.json())
-        .then(result => {
+        .then((response) => response.json())
+        .then((result) => {
           console.log(result.lastID);
           this.$store.commit("setId", result.lastID);
+          this.$router.push("game");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.inputbox {
-  margin-top: 60px;
-}
-
 .container {
   display: flex;
   justify-content: center;
@@ -97,7 +116,3 @@ export default {
   margin-top: 10px;
 }
 </style>
-
-
-
-

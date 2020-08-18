@@ -44,22 +44,23 @@ export default {
     },
     clickMethod() {
       this.show = !this.show;
-      console.log("sound", this.sound);
 
-      if (this.sound === 0 || this.sound === 8) {
-        if (this.sound === 8) {
-          this.sound = 0;
+      if (this.$store.state.audio) {
+        if (this.sound === 0 || this.sound === 8) {
+          if (this.sound === 8) {
+            this.sound = 0;
+          }
+          this.playSound(
+            "http://freesoundeffect.net/sites/default/files/weight-put-on-barbell-3-sound-effect-99734498.mp3"
+          );
         }
-        this.playSound(
-          "http://freesoundeffect.net/sites/default/files/weight-put-on-barbell-3-sound-effect-99734498.mp3"
-        );
+        if (this.sound === 4) {
+          this.playSound(
+            "http://soundbible.com/mp3/Zombie Moan-SoundBible.com-565291980.mp3"
+          );
+        }
+        this.sound++;
       }
-      if (this.sound === 4) {
-        this.playSound(
-          "http://soundbible.com/mp3/Zombie Moan-SoundBible.com-565291980.mp3"
-        );
-      }
-      this.sound++;
 
       if (!this.show) {
         this.$store.commit("increment");
@@ -77,6 +78,8 @@ export default {
         setTimeout(() => {
           this.animation = true;
         }, 250);
+        // console.log(this.$store.state);
+        localStorage.setItem("user", JSON.stringify(this.$store.state));
       }
     },
   },
