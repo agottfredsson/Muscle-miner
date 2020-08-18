@@ -12,62 +12,62 @@ const expressWs = require("express-ws")(app);
 
 let database;
 
-webSocketServer.on("connection", (webSocket) => {
-    console.log("Client connected");
+webSocket.on("connection", (webSocket) => {
+  console.log("Client connected");
 
-    setInterval(() => {
-        webSocket.send("Hello World!");
-    }, 1000);
+  setInterval(() => {
+    webSocket.send("Hello World!");
+  }, 1000);
 });
 
 sqlite
-    .open({ driver: sqlite3.Database, filename: "muscle-miner.sqlite" })
-    .then((database_) => {
-        database = database_;
-    });
+  .open({ driver: sqlite3.Database, filename: "muscle-miner.sqlite" })
+  .then((database_) => {
+    database = database_;
+  });
 
 app.get("/", (request, response) => {
-    database.all("SELECT * FROM users").then((users) => {
-        response.send(users);
-    });
+  database.all("SELECT * FROM users").then((users) => {
+    response.send(users);
+  });
 });
 
 app.post("/:userName", (request, response) => {
-    database
-        .run("INSERT INTO users (name, score) VALUES (?, ?)", [
-            request.params.userName,
-            0,
-        ])
-        .then((users) => {
-            response.send(users);
-        });
+  database
+    .run("INSERT INTO users (name, score) VALUES (?, ?)", [
+      request.params.userName,
+      0,
+    ])
+    .then((users) => {
+      response.send(users);
+    });
 });
 
 app.use(function (req, res, next) {
-    console.log("middleware");
+  console.log("middleware");
 
-    req.testing = "testing";
-    return next();
+  req.testing = "testing";
+  return next();
 });
 
 app.get("/", function (req, res, next) {
-    console.log("get route", req.testing);
-    res.end();
+  console.log("get route", req.testing);
+  res.end();
 });
 
 app.ws("/", function (ws, req) {
-    ws.on("message", function (obj) {
-        const userObj = JSON.parse(obj);
+  ws.on("message", function (obj) {
+    const userObj = JSON.parse(obj);
 
-        database
-            .run("UPDATE users SET score=(?) WHERE userId=(?)", [
-                userObj.score,
-                userObj.id,
-            ])
-            .then((users) => {
-                response.send(users);
-            });
-    });
+    database
+      .run("UPDATE users SET score=(?) WHERE userId=(?)", [
+        userObj.score,
+        userObj.id,
+      ])
+      .then((users) => {
+        response.send(users);
+      });
+  });
 });
 
 app.listen(3000);
