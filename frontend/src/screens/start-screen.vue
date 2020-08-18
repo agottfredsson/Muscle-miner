@@ -19,6 +19,9 @@
         <div class="spaces">
           <button @click="$router.push('highscore')">Highscore</button>
         </div>
+        <div id="topscore"> 
+        <highscore></highscore>
+        </div>
       </div>
     </div>
   </div>
@@ -26,6 +29,7 @@
 
 <script>
 import { ParticlesBg } from "particles-bg-vue";
+import highscore from "../components/highscore.vue";
 
 import face from "../assets/images/face.png";
 
@@ -88,6 +92,15 @@ export default {
 </script>
 
 <style scoped>
+
+#topscore{
+  margin-top: 15px;
+}
+
+.inputbox {
+  margin-top: 60px;
+}
+
 .container {
   display: flex;
   justify-content: center;
