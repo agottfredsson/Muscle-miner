@@ -7,9 +7,7 @@
     </div>
     <div id="gameWindow">
       <transition name="slide-fade">
-        <p id="indicator" v-if="!animation">
-          +{{ this.$store.state.strength }} lbs
-        </p>
+        <p id="indicator" v-if="!animation">+{{ this.$store.state.strength }} lbs</p>
       </transition>
 
       <div v-if="show" style="cursor: pointer">
@@ -29,7 +27,7 @@ import Shop from "../components/Shop.vue";
 export default {
   components: {
     backgroundImage,
-    Shop,
+    Shop
   },
   methods: {
     playSound(sound) {
@@ -38,6 +36,30 @@ export default {
         audio.play();
       }
     },
+    alertCustom() {
+      this.$buefy.dialog.alert({
+        title: "LEVEL UP!",
+        type: "is-dark",
+        message: "You've gained a lot of muscles! 😎💪💪 ",
+        confirmText: "Cool!"
+      });
+    },
+    levelup() {
+      switch (this.$store.state.clicks) {
+        case 100:
+          this.alertCustom();
+
+          break;
+        case 140:
+          this.alertCustom();
+
+          break;
+
+        default:
+          break;
+      }
+    },
+
     getImgUrl(x) {
       return require("../assets/images" +
         this.images[this.$store.state.userState][x]);
@@ -62,12 +84,13 @@ export default {
       this.sound++;
 
       if (!this.show) {
+        this.levelup();
         this.$store.commit("increment");
         const webSocket = new WebSocket("ws://localhost:3000");
 
         const obj = {
           score: this.$store.state.clicks,
-          id: this.$store.state.userId,
+          id: this.$store.state.userId
         };
 
         webSocket.addEventListener("open", () => {
@@ -78,7 +101,7 @@ export default {
           this.animation = true;
         }, 250);
       }
-    },
+    }
   },
   data() {
     return {
@@ -95,10 +118,10 @@ export default {
         ["/glasses-chain-vac-1.png", "/glasses-chain-vac-2.png"],
         ["/chain-1.png", "/chain-2.png"],
         ["/vac-chain-1.png", "/vac-chain-2.png"],
-        ["/vac-1.png", "/vac-2.png"],
-      ],
+        ["/vac-1.png", "/vac-2.png"]
+      ]
     };
-  },
+  }
 };
 </script>
 
