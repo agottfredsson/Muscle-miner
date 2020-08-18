@@ -32,6 +32,9 @@
         <div class="spaces">
           <button @click="$router.push('highscore')">Highscore</button>
         </div>
+        <div id="topscore">
+          <highscore></highscore>
+        </div>
       </div>
     </div>
   </div>
@@ -39,6 +42,7 @@
 
 <script>
 import { ParticlesBg } from "particles-bg-vue";
+import highscore from "../components/highscore.vue";
 
 import face from "../assets/images/face.png";
 import { Volume2Icon, VolumeXIcon } from "vue-feather-icons";
@@ -64,7 +68,7 @@ export default {
       console.log("after", this.$store.state);
     }
   },
-  data: function() {
+  data: function () {
     return {
       config: {
         num: [1, 20],
@@ -129,6 +133,14 @@ export default {
 </script>
 
 <style scoped>
+#topscore {
+  margin-top: 15px;
+}
+
+.inputbox {
+  margin-top: 60px;
+}
+
 .container {
   display: flex;
   justify-content: center;
