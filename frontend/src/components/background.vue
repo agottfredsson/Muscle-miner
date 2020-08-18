@@ -20,6 +20,5 @@ export default {
   width: 100vw;
   background-size: cover;
   position: absolute;
-  background-repeat: no-repeat;
 }
 </style>
