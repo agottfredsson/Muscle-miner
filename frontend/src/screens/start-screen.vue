@@ -19,9 +19,9 @@
         <div class="spaces">
           <button @click="$router.push('highscore')">Highscore</button>
         </div>
-        <div id="topscore"> 
-        <highscore></highscore>
-        </div>
+        
+          <highscore></highscore>
+        
       </div>
     </div>
   </div>
@@ -30,13 +30,13 @@
 <script>
 import { ParticlesBg } from "particles-bg-vue";
 import highscore from "../components/highscore.vue";
-
 import face from "../assets/images/face.png";
 
 export default {
   name: "start",
   components: {
     ParticlesBg,
+    highscore
   },
   created() {
     console.log("before", this.$store.state);

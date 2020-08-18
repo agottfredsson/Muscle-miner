@@ -7,9 +7,19 @@
     </div>
     <div id="gameWindow">
       <transition name="slide-fade">
+
         <p id="indicator" v-if="!animation">
           +{{ this.$store.state.strength }} lbs
         </p>
+
+      </transition>
+
+      <transition name="slide-fade">
+
+        <p id="yougo" v-if="!animation">
+         {{beefCake()}}{{this.hurray}}
+        </p>
+
       </transition>
 
       <div v-if="show" style="cursor: pointer">
@@ -32,6 +42,31 @@ export default {
     Shop,
   },
   methods: {
+    beefCake() {
+      switch(this.$store.state.clicks) {
+  case 10:
+    this.hurray = "YOU WEAK"
+    break;
+  case 11:
+    this.hurray = null
+    break;
+  case 20:
+    this.hurray = "You BEEFCAKE bro!"
+    break;
+  case 21:
+    this.hurray = null
+    break;
+  case 30:
+    this.hurray = "Dayum look at those GLUTES!"
+    break;
+  case 31:
+    this.hurray = null
+    break;
+  default:
+    // code block
+}
+
+    },
     playSound(sound) {
       if (sound) {
         var audio = new Audio(sound);
@@ -98,14 +133,19 @@ export default {
         ["/glasses-chain-vac-1.png", "/glasses-chain-vac-2.png"],
         ["/chain-1.png", "/chain-2.png"],
         ["/vac-chain-1.png", "/vac-chain-2.png"],
-        ["/vac-1.png", "/vac-2.png"],
+        ["/vac-1.png", "/vac-2.png"],  
       ],
+      hurray :  null
     };
   },
 };
 </script>
 
 <style scoped>
+ #yougo{
+  color: blueviolet;
+  font-size: 40px;
+}
 #t {
   position: relative;
   color: white;
