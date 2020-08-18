@@ -10,18 +10,10 @@
       </transition>
 
       <div v-if="show" style="cursor: pointer">
-        <img
-          id="image"
-          src="../assets/images/original-2.png"
-          @click="clickMethod()"
-        />
+        <img id="image" src="../assets/images/original-2.png" @click="clickMethod()" />
       </div>
       <div v-else style="cursor: pointer">
-        <img
-          id="image"
-          src="../assets/images/original-1.png"
-          @click="clickMethod()"
-        />
+        <img id="image" src="../assets/images/original-1.png" @click="clickMethod()" />
       </div>
     </div>
   </div>
@@ -75,7 +67,6 @@ export default {
   position: relative;
   color: white;
   font-size: 2rem;
-  padding-top: 50px;
 }
 
 #content {
@@ -84,7 +75,7 @@ export default {
 }
 
 #gameWindow {
-  position: fixed;
+  position: absolute;
   bottom: 0px;
 }
 
@@ -92,7 +83,8 @@ export default {
   height: 50vh;
 }
 #shop {
-  right: 120px;
+  position: relative;
+  z-index: 1;
 }
 
 #indicator {
