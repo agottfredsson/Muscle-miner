@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     clicks: 0,
     userId: null,
+    userState: 7,
   },
   mutations: {
     increment(state) {
