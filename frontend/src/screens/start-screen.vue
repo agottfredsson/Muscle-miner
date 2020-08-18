@@ -112,7 +112,6 @@ export default {
           console.log(result.lastID);
           this.$store.commit("setId", result.lastID);
           this.audio.pause();
-
           this.$router.push("game");
         });
     }
