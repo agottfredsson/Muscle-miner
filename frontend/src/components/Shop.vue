@@ -7,10 +7,10 @@
       <div class="columns is-mobile">
         <div class="column is-one-quarter is-offset-3">
           <img id="image" src="../assets/images/energy-drink.png" />
-
           <div id="textArea">
             <h1>Drink</h1>
             <p>Do you even drink bro?</p>
+            <br />
           </div>
           <b-button @click="shopBTN(drink)" type="is-warning">{{this.drink}} coins</b-button>
         </div>
@@ -29,6 +29,7 @@
           <div id="textArea">
             <h1>Syringe</h1>
             <p>The heavy shit</p>
+            <br />
           </div>
           <b-button @click="shopBTN(syringe)" type="is-warning">{{this.syringe}} coins</b-button>
         </div>

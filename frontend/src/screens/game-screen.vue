@@ -1,9 +1,10 @@
 <template>
   <div id="content">
     <background-image image="2776.jpg" />
-
-    <p id="t">Muscles gained: {{ this.$store.state.clicks }}lbs</p>
-    <Shop id="shop"></Shop>
+    <div id="shop">
+      <p id="t">Muscles gained: {{ this.$store.state.clicks }}lbs</p>
+      <Shop></Shop>
+    </div>
     <div id="gameWindow">
       <transition name="slide-fade">
         <p id="indicator" v-if="!animation">+1 lbs</p>
