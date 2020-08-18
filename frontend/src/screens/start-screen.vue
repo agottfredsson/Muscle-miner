@@ -15,6 +15,9 @@
         <div class="spaces">
           <button @click="$router.push('highscore')">Highscore</button>
         </div>
+        <div id="topscore"> 
+        <highscore></highscore>
+        </div>
       </div>
     </div>
   </div>
@@ -67,6 +70,11 @@ export default {
 </script>
 
 <style scoped>
+
+#topscore{
+  margin-top: 15px;
+}
+
 .inputbox {
   margin-top: 60px;
 }
