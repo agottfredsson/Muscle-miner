@@ -53,6 +53,7 @@ export default {
     ParticlesBg,
     Volume2Icon,
     VolumeXIcon,
+    highscore,
   },
   created() {
     if (this.$store.state.audio) {
@@ -68,7 +69,7 @@ export default {
       console.log("after", this.$store.state);
     }
   },
-  data: function () {
+  data: function() {
     return {
       config: {
         num: [1, 20],
