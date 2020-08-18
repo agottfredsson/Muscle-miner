@@ -29,9 +29,6 @@
           <button @click="newGame()">New Game</button>
         </div>
 
-        <div class="spaces">
-          <button @click="$router.push('highscore')">Highscore</button>
-        </div>
         <div id="topscore">
           <highscore></highscore>
         </div>
