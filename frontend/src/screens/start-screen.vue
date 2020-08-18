@@ -1,5 +1,18 @@
 <template>
   <div class="start">
+    <volume-2-icon
+      v-if="audioPlay"
+      size="2x"
+      class="custom-class"
+      @click="toggleAudio()"
+    ></volume-2-icon>
+    <volume-x-icon
+      v-else
+      size="2x"
+      class="custom-class"
+      @click="toggleAudio()"
+    ></volume-x-icon>
+
     <particles-bg type="color" :bg="true" />
     <particles-bg type="custom" :config="config" :bg="true" />
 
@@ -7,7 +20,7 @@
 
     <div class="container">
       <div class="button-class">
-        <button v-if="!isNew" @click="$router.push('game')">Continue</button>
+        <button v-if="!isNew" @click="playGame()">Continue</button>
         <div v-if="collapse" class="spaces">
           <input v-model="userName" placeholder="Type your name" />
           <input type="button" value="OK" @click="addUser()" />
@@ -28,13 +41,19 @@
 import { ParticlesBg } from "particles-bg-vue";
 
 import face from "../assets/images/face.png";
+import { Volume2Icon, VolumeXIcon } from "vue-feather-icons";
 
 export default {
   name: "start",
   components: {
     ParticlesBg,
+    Volume2Icon,
+    VolumeXIcon,
   },
   created() {
+    if (this.$store.state.audio) {
+      this.playSound(require("../assets/audio/intro.mp3"));
+    }
     console.log("before", this.$store.state);
 
     const user = JSON.parse(localStorage.getItem("user"));
@@ -64,11 +83,32 @@ export default {
       userName: "",
       collapse: false,
       isNew: true,
+      audioPlay: true,
+      audio: null,
     };
   },
   methods: {
     newGame() {
       this.collapse = true;
+    },
+    playGame() {
+      this.audio.pause();
+      this.$router.push("game");
+    },
+
+    playSound(sound) {
+      if (sound) {
+        this.audio = new Audio(sound);
+        this.audio.play();
+      }
+    },
+    toggleAudio() {
+      this.audioPlay = !this.audioPlay;
+      if (!this.audioPlay) {
+        this.audio.pause();
+      } else {
+        this.audio.play();
+      }
     },
     addUser() {
       localStorage.setItem("user", null);
@@ -81,6 +121,7 @@ export default {
           console.log(result.lastID);
           this.$store.commit("setId", result.lastID);
           this.$router.push("game");
+          this.audio.pause();
         });
     },
   },
@@ -92,6 +133,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .wordart {
   margin-top: 70px;
   transform: scaleY(1.5) skewY(-8deg) rotateZ(-3deg) translateZ(0);
@@ -114,5 +156,12 @@ export default {
 
 .spaces {
   margin-top: 10px;
+}
+.custom-class {
+  color: black;
+  right: 30px;
+  top: 30px;
+  position: absolute;
+  cursor: pointer;
 }
 </style>
