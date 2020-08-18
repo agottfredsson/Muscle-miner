@@ -21,12 +21,7 @@
         class="custom-class"
         @click="toggleAudio()"
       ></volume-2-icon>
-      <volume-x-icon
-        v-else
-        size="2x"
-        class="custom-class"
-        @click="toggleAudio()"
-      ></volume-x-icon>
+      <volume-x-icon v-else size="2x" class="custom-class" @click="toggleAudio()"></volume-x-icon>
       <div id="logoContainer">
         <section class="progressbar">
           <p class="logoText"></p>
@@ -47,14 +42,12 @@ export default {
   },
   components: {
     Volume2Icon,
-    VolumeXIcon,
+    VolumeXIcon
   },
   methods: {
     toggleAudio() {
       this.$store.commit("changeAudio");
     },
-  },
-  methods: {
     expBar() {}
   }
 };
