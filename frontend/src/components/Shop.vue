@@ -42,7 +42,15 @@
         </div>
       </div>
       <div class="columns is-mobile">
-        <div class="column is-half is-3 is-offset-3">
+        <div class="column is-one-quarter is-offset-3">
+          <img id="image" src="../assets/images/bar.png" />
+          <div id="textArea">
+            <h1>Bandana</h1>
+            <p>Why not?!</p>
+          </div>
+          <b-button @click="shopBTN(bandana)" type="is-warning">{{ this.bandana }} coins</b-button>
+        </div>
+        <div class="column is-one-quarter">
           <img id="image" src="../assets/images/chain.png" />
           <div id="textArea">
             <h1>Gold Chain</h1>
@@ -60,12 +68,12 @@ export default {
   data() {
     return {
       isHidden: false,
-      drink: 1,
-      bar: 2,
+      drink: 5,
+      bar: 200,
       syringe: 3,
-      sunGlasses: 4,
-      bandana: 5,
-      goldChain: 6,
+      sunGlasses: 5,
+      bandana: 200,
+      goldChain: 5000,
     };
   },
   methods: {

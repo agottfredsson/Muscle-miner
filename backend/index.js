@@ -32,6 +32,13 @@ app.get("/", (request, response) => {
   });
 });
 
+
+app.get("/topscore", (request, response) => {
+  database.all("SELECT name, score FROM users WHERE score > 100 ORDER BY score DESC LIMIT 10").then((users) => {
+    response.send(users);
+  });
+});
+
 app.post("/:userName", (request, response) => {
   database
     .run("INSERT INTO users (name, score) VALUES (?, ?)", [
