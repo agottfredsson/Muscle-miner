@@ -1,13 +1,15 @@
 <template>
   <div id="content">
     <background-image image="2776.jpg" />
+
     <div id="shop">
-      <p id="t">Muscles gained: {{ this.$store.state.clicks }}lbs</p>
       <Shop></Shop>
     </div>
     <div id="gameWindow">
       <transition name="slide-fade">
-        <p id="indicator" v-if="!animation">+1 lbs</p>
+        <p id="indicator" v-if="!animation">
+          +{{ this.$store.state.strength }} lbs
+        </p>
       </transition>
 
       <div v-if="show" style="cursor: pointer">
@@ -30,12 +32,35 @@ export default {
     Shop,
   },
   methods: {
+    playSound(sound) {
+      if (sound) {
+        var audio = new Audio(sound);
+        audio.play();
+      }
+    },
     getImgUrl(x) {
       return require("../assets/images" +
         this.images[this.$store.state.userState][x]);
     },
     clickMethod() {
       this.show = !this.show;
+
+      if (this.$store.state.audio) {
+        if (this.sound === 0 || this.sound === 8) {
+          if (this.sound === 8) {
+            this.sound = 0;
+          }
+          this.playSound(
+            "http://freesoundeffect.net/sites/default/files/weight-put-on-barbell-3-sound-effect-99734498.mp3"
+          );
+        }
+        if (this.sound === 4) {
+          this.playSound(
+            "http://soundbible.com/mp3/Zombie Moan-SoundBible.com-565291980.mp3"
+          );
+        }
+        this.sound++;
+      }
 
       if (!this.show) {
         this.$store.commit("increment");
@@ -53,6 +78,8 @@ export default {
         setTimeout(() => {
           this.animation = true;
         }, 250);
+        // console.log(this.$store.state);
+        localStorage.setItem("user", JSON.stringify(this.$store.state));
       }
     },
   },
@@ -61,6 +88,7 @@ export default {
       myImage: "../assets/images/original-1.png",
       strength: 1,
       show: false,
+      sound: 0,
       animation: true,
       images: [
         ["/original-1.png", "/original-2.png"],
@@ -82,6 +110,11 @@ export default {
   position: relative;
   color: white;
   font-size: 2rem;
+}
+
+#logo {
+  height: 80px;
+  width: 80px;
 }
 
 #content {

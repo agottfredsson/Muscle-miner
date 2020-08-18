@@ -9,7 +9,8 @@ export default new Vuex.Store({
     userId: null,
     coins: 0,
     userState: 0,
-    strength: 1
+    strength: 1,
+    audio: true,
   },
   mutations: {
     increment(state) {
@@ -18,18 +19,36 @@ export default new Vuex.Store({
       state.coins += 5;
     },
     coinValue(state, value) {
-      state.coins -= value
+      state.coins -= value;
     },
     setId(state, id) {
       state.userId = id;
     },
     changeStrength(state, value) {
-      state.strength += value
+      state.strength += value;
     },
     changeUserState(state, value) {
-      state.userState = value
-
-    }
+      state.userState = value;
+    },
+    changeAudio(state) {
+      state.audio = !state.audio;
+    },
+    resetState(state) {
+      state.clicks = 0;
+      state.userId = null;
+      state.coins = 0;
+      state.userState = 0;
+      state.strength = 1;
+      state.audio = true;
+    },
+    setStateObj(state, obj) {
+      state.clicks = obj.clicks;
+      state.userId = obj.userId;
+      state.coins = obj.coins;
+      state.userState = obj.userState;
+      state.strength = obj.strength;
+      state.audio = obj.audio;
+    },
   },
   actions: {},
   modules: {},
