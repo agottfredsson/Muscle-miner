@@ -22,13 +22,15 @@
 
 <script>
 import { ParticlesBg } from "particles-bg-vue";
+import highscore from "../components/highscore.vue";
 
 import face from "../assets/images/face.png";
 
 export default {
   name: "start",
   components: {
-    ParticlesBg
+    ParticlesBg,
+    highscore
   },
   data: function() {
     return {
