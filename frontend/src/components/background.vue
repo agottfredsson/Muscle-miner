@@ -27,6 +27,13 @@
         class="custom-class"
         @click="toggleAudio()"
       ></volume-x-icon>
+      <div id="logoContainer">
+        <section class="progressbar">
+          <p class="logoText"></p>
+
+          <b-progress :value="this.$store.state.clicks" show-value format="percent" :max="100"></b-progress>
+        </section>
+      </div>
     </div>
   </div>
 </template>
@@ -36,7 +43,7 @@ import { Volume2Icon, VolumeXIcon } from "vue-feather-icons";
 export default {
   name: "backgroundImage",
   props: {
-    image: String,
+    image: String
   },
   components: {
     Volume2Icon,
@@ -47,6 +54,9 @@ export default {
       this.$store.commit("changeAudio");
     },
   },
+  methods: {
+    expBar() {}
+  }
 };
 </script>
 
@@ -78,5 +88,11 @@ export default {
   top: 10px;
   color: white;
   cursor: pointer;
+}
+.progressbar {
+  padding-left: 10px;
+  margin-top: 10px;
+  height: 100px;
+  width: 100px;
 }
 </style>
