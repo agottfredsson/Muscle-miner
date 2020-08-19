@@ -6,6 +6,15 @@
       <Shop></Shop>
     </div>
     <div id="gameWindow">
+
+      <transition name="bounce">
+
+        <p id="yougo" v-if="!animation">
+         {{beefCake()}}{{this.hurray}}
+        </p>
+
+      </transition>
+      
       <transition name="slide-fade">
 
         <p id="indicator" v-if="!animation">
@@ -14,13 +23,7 @@
 
       </transition>
 
-      <transition name="slide-fade">
 
-        <p id="yougo" v-if="!animation">
-         {{beefCake()}}{{this.hurray}}
-        </p>
-
-      </transition>
 
       <div v-if="show" style="cursor: pointer">
         <img id="image" :src="getImgUrl(1)" @click="clickMethod()" />
@@ -43,29 +46,24 @@ export default {
   },
   methods: {
     beefCake() {
-      switch(this.$store.state.clicks) {
-  case 10:
-    this.hurray = "YOU WEAK"
+      switch(this.$store.state.trueclicks) {
+  case 5:
+    this.hurray = "You BEEFCAKE bro!"
     break;
-  case 11:
-    this.hurray = null
+  case 10:
+    this.hurray = "You BEEFCAKE bro!"
     break;
   case 20:
     this.hurray = "You BEEFCAKE bro!"
     break;
-  case 21:
-    this.hurray = null
-    break;
   case 30:
     this.hurray = "Dayum look at those GLUTES!"
     break;
-  case 31:
-    this.hurray = null
-    break;
   default:
-    // code block
+    this.hurray = null
+  
+    console.log(this.$store.state.trueclicks+ " true clicks")
 }
-
     },
     playSound(sound) {
       if (sound) {
@@ -128,7 +126,9 @@ export default {
 
         const obj = {
           score: this.$store.state.clicks,
-          id: this.$store.state.userId
+          id: this.$store.state.userId,
+          trueclicks: this.$store.state.trueclicks,
+          
         };
 
         webSocket.addEventListener("open", () => {
@@ -169,7 +169,7 @@ export default {
 <style scoped>
  #yougo{
   color: blueviolet;
-  font-size: 40px;
+  font-size: 100px;
 }
 #t {
   position: relative;
@@ -216,4 +216,22 @@ export default {
   transform: translateY(10px);
   opacity: 0;
 }
+.bounce-enter-active {
+  animation: bounce-in 1.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 1.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  90% {
+    transform: scale(1);
+  }
+}
+
 </style>

@@ -34,7 +34,7 @@ app.get("/", (request, response) => {
 
 
 app.get("/topscore", (request, response) => {
-  database.all("SELECT name, score FROM users WHERE score > 100 ORDER BY score DESC LIMIT 10").then((users) => {
+  database.all("SELECT name, score, trueclicks FROM users WHERE score > 100 ORDER BY score DESC LIMIT 10").then((users) => {
     response.send(users);
   });
 });
@@ -67,9 +67,11 @@ app.ws("/", function (ws, req) {
     const userObj = JSON.parse(obj);
 
     database
-      .run("UPDATE users SET score=(?) WHERE userId=(?)", [
+      .run("UPDATE users SET score=(?), trueclicks=(?) WHERE userId=(?) ", [
         userObj.score,
+        userObj.trueclicks,
         userObj.id,
+        
       ])
       .then((users) => {
         response.send(users);

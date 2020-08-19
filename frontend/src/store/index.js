@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     clicks: 0,
+    trueclicks: 0,
     userId: null,
     coins: 0,
     userState: 0,
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     increment(state) {
       //setInterval(function () { state.coins += 5; }, 3000);
       state.clicks += state.strength;
+      state.trueclicks ++;
       state.coins += 5;
     },
     coinValue(state, value) {
@@ -35,14 +37,17 @@ export default new Vuex.Store({
     },
     resetState(state) {
       state.clicks = 0;
+      state.trueclicks = 0;
       state.userId = null;
       state.coins = 0;
       state.userState = 0;
       state.strength = 1;
       state.audio = true;
+      
     },
     setStateObj(state, obj) {
       state.clicks = obj.clicks;
+      state.trueclicks = obj.trueclicks;
       state.userId = obj.userId;
       state.coins = obj.coins;
       state.userState = obj.userState;
