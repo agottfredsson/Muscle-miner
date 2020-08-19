@@ -1,5 +1,8 @@
 <template>
   <div class="start">
+    <volume-2-icon v-if="audioPlay" size="2x" class="custom-class" @click="toggleAudio()"></volume-2-icon>
+    <volume-x-icon v-else size="2x" class="custom-class" @click="toggleAudio()"></volume-x-icon>
+
     <particles-bg type="color" :bg="true" />
     <particles-bg type="custom" :config="config" :bg="true" />
 
@@ -7,7 +10,7 @@
 
     <div class="container">
       <div class="button-class">
-        <button v-if="!isNew" @click="$router.push('game')">Continue</button>
+        <button v-if="!isNew" @click="playGame()">Continue</button>
         <div v-if="collapse" class="spaces">
           <input v-model="userName" placeholder="Type your name" />
           <input type="button" value="OK" @click="addUser()" />
@@ -16,9 +19,6 @@
           <button @click="newGame()">New Game</button>
         </div>
 
-        <div class="spaces">
-          <button @click="$router.push('highscore')">Highscore</button>
-        </div>
         <div id="topscore">
           <highscore></highscore>
         </div>
@@ -30,15 +30,21 @@
 <script>
 import { ParticlesBg } from "particles-bg-vue";
 import highscore from "../components/highscore.vue";
-
 import face from "../assets/images/face.png";
+import { Volume2Icon, VolumeXIcon } from "vue-feather-icons";
 
 export default {
   name: "start",
   components: {
     ParticlesBg,
+    Volume2Icon,
+    VolumeXIcon,
+    highscore
   },
   created() {
+    if (this.$store.state.audio) {
+      this.playSound(require("../assets/audio/intro.mp3"));
+    }
     console.log("before", this.$store.state);
 
     const user = JSON.parse(localStorage.getItem("user"));
@@ -49,7 +55,7 @@ export default {
       console.log("after", this.$store.state);
     }
   },
-  data: function () {
+  data: function() {
     return {
       config: {
         num: [1, 20],
@@ -63,31 +69,53 @@ export default {
         scale: [0.1, 0.4],
         position: "all",
         cross: "dead",
-        random: 15,
+        random: 15
       },
       userName: "",
       collapse: false,
       isNew: true,
+      audioPlay: true,
+      audio: null
     };
   },
   methods: {
     newGame() {
       this.collapse = true;
     },
+    playGame() {
+      this.audio.pause();
+      this.$router.push("game");
+    },
+
+    playSound(sound) {
+      if (sound) {
+        this.audio = new Audio(sound);
+        this.audio.play();
+      }
+    },
+    toggleAudio() {
+      this.audioPlay = !this.audioPlay;
+      if (!this.audioPlay) {
+        this.audio.pause();
+      } else {
+        this.audio.play();
+      }
+    },
     addUser() {
       localStorage.setItem("user", null);
       this.$store.commit("resetState");
       fetch(`http://localhost:3000/${this.userName}`, {
-        method: "POST",
+        method: "POST"
       })
-        .then((response) => response.json())
-        .then((result) => {
+        .then(response => response.json())
+        .then(result => {
           console.log(result.lastID);
           this.$store.commit("setId", result.lastID);
+          this.audio.pause();
           this.$router.push("game");
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -104,6 +132,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .wordart {
   margin-top: 70px;
   transform: scaleY(1.5) skewY(-8deg) rotateZ(-3deg) translateZ(0);
@@ -126,5 +155,12 @@ export default {
 
 .spaces {
   margin-top: 10px;
+}
+.custom-class {
+  color: black;
+  right: 30px;
+  top: 30px;
+  position: absolute;
+  cursor: pointer;
 }
 </style>
