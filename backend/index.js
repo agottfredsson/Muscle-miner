@@ -15,9 +15,6 @@ let database;
 webSocket.on("connection", (webSocket) => {
   console.log("Client connected");
 
-  setInterval(() => {
-    webSocket.send("Hello World!");
-  }, 1000);
 });
 
 sqlite
@@ -62,7 +59,7 @@ app.get("/", function (req, res, next) {
   res.end();
 });
 
-app.ws("/", function (ws, req) {
+app.ws("/", function (ws, req, response) {
   ws.on("message", function (obj) {
     const userObj = JSON.parse(obj);
 
@@ -73,8 +70,10 @@ app.ws("/", function (ws, req) {
       ])
       .then((users) => {
         response.send(users);
+        response.end();
       });
   });
+
 });
 
 app.listen(3000);
