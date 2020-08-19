@@ -39,7 +39,7 @@ import Shop from "../components/Shop.vue";
 export default {
   components: {
     backgroundImage,
-    Shop,
+    Shop
   },
   methods: {
     beefCake() {
@@ -73,6 +73,30 @@ export default {
         audio.play();
       }
     },
+    alertCustom() {
+      this.$buefy.dialog.alert({
+        title: "LEVEL UP!",
+        type: "is-dark",
+        message: "You've gained a lot of muscles! 😎💪💪 ",
+        confirmText: "Cool!"
+      });
+    },
+    levelup() {
+      switch (this.$store.state.clicks) {
+        case 100:
+          this.alertCustom();
+
+          break;
+        case 140:
+          this.alertCustom();
+
+          break;
+
+        default:
+          break;
+      }
+    },
+
     getImgUrl(x) {
       return require("../assets/images" +
         this.images[this.$store.state.userState][x]);
@@ -98,12 +122,13 @@ export default {
       }
 
       if (!this.show) {
+        this.levelup();
         this.$store.commit("increment");
         const webSocket = new WebSocket("ws://localhost:3000");
 
         const obj = {
           score: this.$store.state.clicks,
-          id: this.$store.state.userId,
+          id: this.$store.state.userId
         };
 
         webSocket.addEventListener("open", () => {
@@ -116,7 +141,7 @@ export default {
         // console.log(this.$store.state);
         localStorage.setItem("user", JSON.stringify(this.$store.state));
       }
-    },
+    }
   },
   data() {
     return {
@@ -137,7 +162,7 @@ export default {
       ],
       hurray :  null
     };
-  },
+  }
 };
 </script>
 
