@@ -59,7 +59,7 @@ app.get("/", function (req, res, next) {
   res.end();
 });
 
-app.ws("/", function (ws, req, response) {
+app.ws("/", function (ws, req, res) {
   ws.on("message", function (obj) {
     const userObj = JSON.parse(obj);
 
@@ -70,10 +70,7 @@ app.ws("/", function (ws, req, response) {
         userObj.id,
         
       ])
-      .then((users) => {
-        response.send(users);
-        response.end();
-      });
+
   });
 
 });
