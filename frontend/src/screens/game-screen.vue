@@ -1,25 +1,18 @@
 <template>
   <div id="content">
-    <background-image image="2776.jpg" />
+    <background-image v-if="this.$store.state.clicks <= 30" image="2776.jpg" />
+    <background-image v-if="this.$store.state.clicks >= 31" image="background-2.png" />
 
     <div id="shop">
       <Shop></Shop>
     </div>
     <div id="gameWindow">
       <transition name="slide-fade">
-
-        <p id="indicator" v-if="!animation">
-          +{{ this.$store.state.strength }} lbs
-        </p>
-
+        <p id="indicator" v-if="!animation">+{{ this.$store.state.strength }} lbs</p>
       </transition>
 
       <transition name="slide-fade">
-
-        <p id="yougo" v-if="!animation">
-         {{beefCake()}}{{this.hurray}}
-        </p>
-
+        <p id="yougo" v-if="!animation">{{beefCake()}}{{this.hurray}}</p>
       </transition>
 
       <div v-if="show" style="cursor: pointer">
@@ -43,29 +36,28 @@ export default {
   },
   methods: {
     beefCake() {
-      switch(this.$store.state.clicks) {
-  case 10:
-    this.hurray = "YOU WEAK"
-    break;
-  case 11:
-    this.hurray = null
-    break;
-  case 20:
-    this.hurray = "You BEEFCAKE bro!"
-    break;
-  case 21:
-    this.hurray = null
-    break;
-  case 30:
-    this.hurray = "Dayum look at those GLUTES!"
-    break;
-  case 31:
-    this.hurray = null
-    break;
-  default:
-    // code block
-}
-
+      switch (this.$store.state.clicks) {
+        case 10:
+          this.hurray = "YOU WEAK";
+          break;
+        case 11:
+          this.hurray = null;
+          break;
+        case 20:
+          this.hurray = "You BEEFCAKE bro!";
+          break;
+        case 21:
+          this.hurray = null;
+          break;
+        case 30:
+          this.hurray = "Dayum look at those GLUTES!";
+          break;
+        case 31:
+          this.hurray = null;
+          break;
+        default:
+        // code block
+      }
     },
     playSound(sound) {
       if (sound) {
@@ -77,15 +69,14 @@ export default {
       this.$buefy.dialog.alert({
         title: "LEVEL UP!",
         type: "is-dark",
-        message: "You've gained a lot of muscles! 😎💪💪 ",
+        message: "You're too strong for that old gym",
         confirmText: "Cool!"
       });
     },
     levelup() {
       switch (this.$store.state.clicks) {
-        case 100:
+        case 30:
           this.alertCustom();
-
           break;
         case 140:
           this.alertCustom();
@@ -150,6 +141,7 @@ export default {
       show: false,
       sound: 0,
       animation: true,
+      backgroundImages: [["/background-2.jpg"], ["/1920.jpg"]],
       images: [
         ["/original-1.png", "/original-2.png"],
         ["/glasses-1.png", "/glasses-2.png"],
@@ -158,16 +150,16 @@ export default {
         ["/glasses-chain-vac-1.png", "/glasses-chain-vac-2.png"],
         ["/chain-1.png", "/chain-2.png"],
         ["/vac-chain-1.png", "/vac-chain-2.png"],
-        ["/vac-1.png", "/vac-2.png"],  
+        ["/vac-1.png", "/vac-2.png"]
       ],
-      hurray :  null
+      hurray: null
     };
   }
 };
 </script>
 
 <style scoped>
- #yougo{
+#yougo {
   color: blueviolet;
   font-size: 40px;
 }
