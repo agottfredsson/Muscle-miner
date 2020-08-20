@@ -15,9 +15,6 @@ let database;
 webSocket.on("connection", (webSocket) => {
   console.log("Client connected");
 
-  setInterval(() => {
-    webSocket.send("Hello World!");
-  }, 1000);
 });
 
 sqlite
@@ -34,7 +31,7 @@ app.get("/", (request, response) => {
 
 
 app.get("/topscore", (request, response) => {
-  database.all("SELECT name, score FROM users WHERE score > 100 ORDER BY score DESC LIMIT 10").then((users) => {
+  database.all("SELECT name, score, trueclicks FROM users WHERE score > 100 ORDER BY score DESC LIMIT 10").then((users) => {
     response.send(users);
   });
 });
@@ -62,19 +59,20 @@ app.get("/", function (req, res, next) {
   res.end();
 });
 
-app.ws("/", function (ws, req) {
+app.ws("/", function (ws, req, res) {
   ws.on("message", function (obj) {
     const userObj = JSON.parse(obj);
 
     database
-      .run("UPDATE users SET score=(?) WHERE userId=(?)", [
+      .run("UPDATE users SET score=(?), trueclicks=(?) WHERE userId=(?) ", [
         userObj.score,
+        userObj.trueclicks,
         userObj.id,
+        
       ])
-      .then((users) => {
-        response.send(users);
-      });
+
   });
+
 });
 
 app.listen(3000);

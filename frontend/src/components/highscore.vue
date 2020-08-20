@@ -4,7 +4,7 @@
       <div>
         <ul id="topscore" v-for="(user) in this.database" :key="user.userId">
               <li id="topScoreElement">
-                  <p id="name">Player: {{user.name}}</p> <p id="score">Lifted: {{user.score}} LBS </p>
+                  <p id="name">Player: {{user.name}}</p> <p id="score">Lifted: {{user.score}} LBS  </p>
               </li>
         </ul>
       </div>
@@ -41,7 +41,8 @@
           data(){
             return{
                 database : [],
-                users :[]
+                users :[],
+                
             }
           },    
       }
