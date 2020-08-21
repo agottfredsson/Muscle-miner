@@ -7,12 +7,12 @@
       <Shop></Shop>
     </div>
     <div id="gameWindow">
-      <transition name="bounce">
-        <p id="yougo" v-if="!animation">{{beefCake()}}{{this.hurray}}</p>
+      <transition name="slide-fade">
+        <p id="indicator" v-if="!animation">+{{ this.$store.state.strength }} lbs</p>
       </transition>
 
       <transition name="slide-fade">
-        <p id="indicator" v-if="!animation">+{{ this.$store.state.strength }} lbs</p>
+        <p id="yougo" v-if="!animation">{{beefCake()}}{{this.hurray}}</p>
       </transition>
 
       <div v-if="show" style="cursor: pointer">
@@ -32,7 +32,7 @@ import Shop from "../components/Shop.vue";
 export default {
   components: {
     backgroundImage,
-    Shop
+    Shop,
   },
   methods: {
     beefCake() {
@@ -65,8 +65,8 @@ export default {
       this.$buefy.dialog.alert({
         title: "LEVEL UP!",
         type: "is-dark",
-        message: "You're too strong for that old gym",
-        confirmText: "Cool!"
+        message: "You've gained a lot of muscles! 😎💪💪 ",
+        confirmText: "Cool!",
       });
     },
     levelup() {
@@ -116,7 +116,7 @@ export default {
         const obj = {
           score: this.$store.state.clicks,
           id: this.$store.state.userId,
-          trueclicks: this.$store.state.trueclicks
+          trueclicks: this.$store.state.trueclicks,
         };
 
         webSocket.addEventListener("open", () => {
@@ -129,7 +129,7 @@ export default {
         // console.log(this.$store.state);
         localStorage.setItem("user", JSON.stringify(this.$store.state));
       }
-    }
+    },
   },
   data() {
     return {
@@ -147,11 +147,11 @@ export default {
         ["/glasses-chain-vac-1.png", "/glasses-chain-vac-2.png"],
         ["/chain-1.png", "/chain-2.png"],
         ["/vac-chain-1.png", "/vac-chain-2.png"],
-        ["/vac-1.png", "/vac-2.png"]
+        ["/vac-1.png", "/vac-2.png"],
       ],
-      hurray: null
+      hurray: null,
     };
-  }
+  },
 };
 </script>
 

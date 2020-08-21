@@ -27,9 +27,18 @@
 export default {
   name: "backgroundImage",
   props: {
-    image: String
+    image: String,
   },
-  methods: {}
+  components: {
+    Volume2Icon,
+    VolumeXIcon,
+  },
+  methods: {
+    toggleAudio() {
+      this.$store.commit("changeAudio");
+    },
+    expBar() {},
+  },
 };
 </script>
 
