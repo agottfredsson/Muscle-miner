@@ -19,11 +19,19 @@
           <b-progress :value="this.$store.state.clicks" show-value format="percent" :max="100"></b-progress>
         </section>
       </div>
+      <volume-2-icon
+        v-if="this.$store.state.audio"
+        size="2x"
+        class="custom-class"
+        @click="toggleAudio()"
+      ></volume-2-icon>
+      <volume-x-icon v-else size="2x" class="custom-class" @click="toggleAudio()"></volume-x-icon>
     </div>
   </div>
 </template>
 
 <script>
+import { Volume2Icon, VolumeXIcon } from "vue-feather-icons";
 export default {
   name: "backgroundImage",
   props: {
@@ -69,5 +77,12 @@ export default {
   margin-top: 10px;
   height: 100px;
   width: 100px;
+}
+.custom-class {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: white;
+  cursor: pointer;
 }
 </style>
