@@ -1,0 +1,13 @@
+{
+  "background_color": "grey",
+  "display": "standalone",
+  "icons": [
+    { "sizes": "48x48", "src": "./img/icons/icon@48px.png" },
+    { "sizes": "96x96", "src": "./img/icons/icon@96px.png" },
+    { "sizes": "192x192", "src": "./img/icons/icon@192px.png" }
+  ],
+  "name": "Muscle-miner",
+  "short_name": "Muscle-miner",
+  "start_url": ".",
+  "theme_color": "lightblue"
+}

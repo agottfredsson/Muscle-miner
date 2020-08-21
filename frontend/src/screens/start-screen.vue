@@ -1,7 +1,17 @@
 <template>
   <div class="start">
-    <volume-2-icon v-if="audioPlay" size="2x" class="custom-class" @click="toggleAudio()"></volume-2-icon>
-    <volume-x-icon v-else size="2x" class="custom-class" @click="toggleAudio()"></volume-x-icon>
+    <volume-2-icon
+      v-if="audioPlay"
+      size="2x"
+      class="custom-class"
+      @click="toggleAudio()"
+    ></volume-2-icon>
+    <volume-x-icon
+      v-else
+      size="2x"
+      class="custom-class"
+      @click="toggleAudio()"
+    ></volume-x-icon>
 
     <particles-bg type="color" :bg="true" />
     <particles-bg type="custom" :config="config" :bg="true" />
@@ -39,7 +49,7 @@ export default {
     ParticlesBg,
     Volume2Icon,
     VolumeXIcon,
-    highscore
+    highscore,
   },
   created() {
     if (this.$store.state.audio) {
@@ -69,13 +79,13 @@ export default {
         scale: [0.1, 0.4],
         position: "all",
         cross: "dead",
-        random: 15
+        random: 15,
       },
       userName: "",
       collapse: false,
       isNew: true,
       audioPlay: true,
-      audio: null
+      audio: null,
     };
   },
   methods: {
@@ -102,20 +112,21 @@ export default {
       }
     },
     addUser() {
+      console.log("clicked");
       localStorage.setItem("user", null);
       this.$store.commit("resetState");
       fetch(`http://localhost:3000/${this.userName}`, {
-        method: "POST"
+        method: "POST",
       })
-        .then(response => response.json())
-        .then(result => {
+        .then((response) => response.json())
+        .then((result) => {
           console.log(result.lastID);
           this.$store.commit("setId", result.lastID);
           this.audio.pause();
           this.$router.push("game");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
