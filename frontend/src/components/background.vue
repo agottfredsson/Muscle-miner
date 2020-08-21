@@ -38,18 +38,18 @@ import { Volume2Icon, VolumeXIcon } from "vue-feather-icons";
 export default {
   name: "backgroundImage",
   props: {
-    image: String
+    image: String,
   },
   components: {
     Volume2Icon,
-    VolumeXIcon
+    VolumeXIcon,
   },
   methods: {
     toggleAudio() {
       this.$store.commit("changeAudio");
     },
-    expBar() {}
-  }
+    expBar() {},
+  },
 };
 </script>
 
