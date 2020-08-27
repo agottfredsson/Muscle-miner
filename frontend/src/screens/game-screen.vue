@@ -1,6 +1,11 @@
 <template>
   <div id="content">
-    <background-image image="2776.jpg" />
+    <background-image v-if="this.$store.state.trueclicks <= 20" image="2776.jpg" />
+    <background-image v-if="this.$store.state.trueclicks >= 20" image="background-2.png" />
+    <background-image v-if="this.$store.state.trueclicks >= 40" image="background-3.jpg" />
+    <background-image v-if="this.$store.state.trueclicks === 60" image="background-4-black.jpg" />
+    <background-image v-if="this.$store.state.trueclicks >= 61" image="background-4x2.png" />
+    <background-image v-if="this.$store.state.trueclicks >= 62" image="background-golds.jpg" />
 
     <div id="shop">
       <Shop></Shop>
@@ -27,16 +32,32 @@
       </transition>
 
 
-
-      <div v-if="show" style="cursor: pointer">
-        <img id="image" :src="getImgUrl(1)" @click="clickMethod()" />
+    <div id="gameWindow">
+      <div id="enterBtn" v-if="this.$store.state.trueclicks === 61">
+        <b-button @click="clickMethod()" id="enterGymBtn" type="is-dark" size="is-large">Enter Gym</b-button>
       </div>
-      <div v-else style="cursor: pointer">
-        <img id="image" :src="getImgUrl(0)" @click="clickMethod()" />
+      <div class="toggle" v-if="this.$store.state.trueclicks === 60">
+        <b-button @click="clickMethod()" id="advanceBtn" type="is-dark">Head over to Gold's Gym</b-button>
+      </div>
+
+      <div v-else>
+        <transition name="slide-fade">
+          <p id="indicator" v-if="!animation">+{{ this.$store.state.strength }} lbs</p>
+        </transition>
+        <transition name="slide-fade">
+          <p id="yougo" v-if="!animation">{{beefCake()}}{{this.hurray}}</p>
+        </transition>
+        <div v-if="show" style="cursor: pointer">
+          <img id="image" :src="getImgUrl(1)" @click="clickMethod()" />
+        </div>
+        <div v-else style="cursor: pointer">
+          <img id="image" :src="getImgUrl(0)" @click="clickMethod()" />
+        </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 
@@ -79,27 +100,36 @@ export default {
         audio.play();
       }
     },
-    alertCustom() {
-      this.$buefy.dialog.alert({
-        title: "LEVEL UP!",
-        type: "is-dark",
-        message: "You've gained a lot of muscles! 😎💪💪 ",
-        confirmText: "Cool!"
-      });
-    },
+
     levelup() {
-      switch (this.$store.state.clicks) {
-        case 100:
-          this.alertCustom();
+      switch (this.$store.state.trueclicks) {
+        case 19:
+          this.$store.commit("changeStrength", 5);
+          this.$store.commit("levelBonus", 100);
+
+          this.$buefy.dialog.alert({
+            title: "LEVEL UP!",
+            type: "is-dark",
+            message:
+              "<b>You gained a lot of muscles.</b> 💪💪<br> You are now too strong for that old gym.",
+            confirmText: "Cool!"
+          });
 
           break;
-        case 140:
-          this.alertCustom();
+        case 39:
+          this.$store.commit("changeStrength", 10);
+          this.$store.commit("levelBonus", 200);
 
+          this.$buefy.dialog.alert({
+            title: "LEVEL UP!",
+            type: "is-dark",
+            message:
+              "<b>You're moving up in this world, Muscle Beach is the place for you now. ",
+            confirmText: "Nice!"
+          });
           break;
 
         default:
-          break;
       }
     },
 
@@ -119,7 +149,7 @@ export default {
             "http://freesoundeffect.net/sites/default/files/weight-put-on-barbell-3-sound-effect-99734498.mp3"
           );
         }
-        if (this.sound === 4) {
+        if (this.sound === 5) {
           this.playSound(
             "http://soundbible.com/mp3/Zombie Moan-SoundBible.com-565291980.mp3"
           );
@@ -158,6 +188,7 @@ export default {
       show: false,
       sound: 0,
       animation: true,
+      backgroundImages: [["/background-2.jpg"], ["/1920.jpg"]],
       images: [
         ["/original-1.png", "/original-2.png"],
         ["/glasses-1.png", "/glasses-2.png"],
@@ -166,16 +197,21 @@ export default {
         ["/glasses-chain-vac-1.png", "/glasses-chain-vac-2.png"],
         ["/chain-1.png", "/chain-2.png"],
         ["/vac-chain-1.png", "/vac-chain-2.png"],
-        ["/vac-1.png", "/vac-2.png"],  
+        ["/vac-1.png", "/vac-2.png"]
       ],
-      hurray :  null
+      hurray: null,
+      toggle: false
     };
   }
 };
 </script>
 
 <style scoped>
- #yougo{
+#gif {
+  height: 350px;
+  width: 400px;
+}
+#yougo {
   color: blueviolet;
   font-size: 100px;
 }
@@ -241,5 +277,7 @@ export default {
     transform: scale(1);
   }
 }
-
+#advanceBtn {
+  margin-bottom: 200px;
+}
 </style>

@@ -1,9 +1,7 @@
 <template>
   <div
     id="background"
-    :style="{
-      'background-image': 'url(' + require(`../assets/images/${image}`) + ')',
-    }"
+    :style="{ 'background-image': 'url(' + require(`../assets/images/${image}`) + ')',}"
   >
     <div id="logoContent">
       <div id="logoContainer">
@@ -14,6 +12,16 @@
         <img id="logo" src="../assets/images/coin-logo.png" />
         <p class="logoText">{{ this.$store.state.coins }}</p>
       </div>
+      <div id="logoContainer">
+        <section class="progressbar">
+          <p class="logoText"></p>
+        </section>
+      </div>
+      <img
+        id="gif"
+        v-if="this.$store.state.trueclicks === 60"
+        src="../assets/gifs/cyrilleanton.gif"
+      />
 
       <volume-2-icon
         v-if="this.$store.state.audio"
@@ -22,13 +30,6 @@
         @click="toggleAudio()"
       ></volume-2-icon>
       <volume-x-icon v-else size="2x" class="custom-class" @click="toggleAudio()"></volume-x-icon>
-      <div id="logoContainer">
-        <section class="progressbar">
-          <p class="logoText"></p>
-
-          <b-progress :value="this.$store.state.clicks" show-value format="percent" :max="100"></b-progress>
-        </section>
-      </div>
     </div>
   </div>
 </template>
@@ -47,13 +48,16 @@ export default {
   methods: {
     toggleAudio() {
       this.$store.commit("changeAudio");
-    },
-    expBar() {}
+    }
   }
 };
 </script>
 
 <style scoped>
+#gif {
+  height: 400px;
+}
+
 #background {
   height: 100vh;
   width: 100vw;
@@ -66,7 +70,6 @@ export default {
 }
 #logoContainer {
   display: flex;
-  width: 100vh;
 }
 
 .logoText {
@@ -75,17 +78,18 @@ export default {
   margin-top: 12px;
   font-size: 22px;
 }
+
+.progressbar {
+  padding-left: 10px;
+  margin-top: 10px;
+  height: 100px;
+  width: 100px;
+}
 .custom-class {
   position: absolute;
   right: 10px;
   top: 10px;
   color: white;
   cursor: pointer;
-}
-.progressbar {
-  padding-left: 10px;
-  margin-top: 10px;
-  height: 100px;
-  width: 100px;
 }
 </style>

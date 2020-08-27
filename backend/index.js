@@ -14,7 +14,6 @@ let database;
 
 webSocket.on("connection", (webSocket) => {
   console.log("Client connected");
-
 });
 
 sqlite
@@ -28,7 +27,6 @@ app.get("/", (request, response) => {
     response.send(users);
   });
 });
-
 
 app.get("/topscore", (request, response) => {
   database.all("SELECT name, score, trueclicks, eff FROM users WHERE score > 100 ORDER BY score DESC LIMIT 10").then((users) => {
@@ -48,8 +46,6 @@ app.post("/:userName", (request, response) => {
 });
 
 app.use(function (req, res, next) {
-  console.log("middleware");
-
   req.testing = "testing";
   return next();
 });
@@ -59,7 +55,7 @@ app.get("/", function (req, res, next) {
   res.end();
 });
 
-app.ws("/", function (ws, req, response) {
+app.ws("/", function (ws, req, res) {
   ws.on("message", function (obj) {
     const userObj = JSON.parse(obj);
 
@@ -76,7 +72,6 @@ app.ws("/", function (ws, req, response) {
         response.end();
       });
   });
-
 });
 
 app.listen(3000);
