@@ -15,10 +15,14 @@
       <div id="logoContainer">
         <section class="progressbar">
           <p class="logoText"></p>
-
-          <b-progress :value="this.$store.state.clicks" show-value format="percent" :max="100"></b-progress>
         </section>
       </div>
+      <img
+        id="gif"
+        v-if="this.$store.state.trueclicks === 60"
+        src="../assets/gifs/cyrilleanton.gif"
+      />
+
       <volume-2-icon
         v-if="this.$store.state.audio"
         size="2x"
@@ -35,22 +39,25 @@ import { Volume2Icon, VolumeXIcon } from "vue-feather-icons";
 export default {
   name: "backgroundImage",
   props: {
-    image: String,
+    image: String
   },
   components: {
     Volume2Icon,
-    VolumeXIcon,
+    VolumeXIcon
   },
   methods: {
     toggleAudio() {
       this.$store.commit("changeAudio");
-    },
-    expBar() {},
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
+#gif {
+  height: 400px;
+}
+
 #background {
   height: 100vh;
   width: 100vw;

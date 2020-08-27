@@ -17,7 +17,7 @@ export default new Vuex.Store({
     increment(state) {
       //setInterval(function () { state.coins += 5; }, 3000);
       state.clicks += state.strength;
-      state.trueclicks ++;
+      state.trueclicks++;
       state.coins += 5;
     },
     coinValue(state, value) {
@@ -29,6 +29,10 @@ export default new Vuex.Store({
     changeStrength(state, value) {
       state.strength += value;
     },
+    levelBonus(state, value) {
+      state.coins += value
+    },
+
     changeUserState(state, value) {
       state.userState = value;
     },
@@ -43,7 +47,7 @@ export default new Vuex.Store({
       state.userState = 0;
       state.strength = 1;
       state.audio = true;
-      
+
     },
     setStateObj(state, obj) {
       state.clicks = obj.clicks;
