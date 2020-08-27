@@ -17,6 +17,8 @@
     "particles-bg-vue": "^1.3.5",
     "register-service-worker": "^1.7.1",
     "side-drawer": "^2.3.0",
+    "sqlite": "^4.0.14",
+    "sqlite3": "^5.0.0",
     "timer-node": "^3.0.0",
     "vue": "^2.6.11",
     "vue-autoscroll-list": "0.0.3",

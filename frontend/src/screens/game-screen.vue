@@ -11,25 +11,7 @@
       <Shop></Shop>
       <timer></timer>
     </div>
-    <div id="gameWindow">
 
-      
-
-      <transition name="bounce">
-
-        <p id="yougo" v-if="!animation">
-         {{beefCake()}} {{this.hurray}}
-        </p>
-
-      </transition>
-      
-      <transition name="slide-fade">
-
-        <p id="indicator" v-if="!animation">
-          +{{ this.$store.state.strength }} lbs
-        </p>
-
-      </transition>
 
 
     <div id="gameWindow">
