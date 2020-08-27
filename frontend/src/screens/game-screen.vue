@@ -4,13 +4,16 @@
 
     <div id="shop">
       <Shop></Shop>
+      <timer></timer>
     </div>
     <div id="gameWindow">
+
+      
 
       <transition name="bounce">
 
         <p id="yougo" v-if="!animation">
-         {{beefCake()}}{{this.hurray}}
+         {{beefCake()}} {{this.hurray}}
         </p>
 
       </transition>
@@ -36,15 +39,20 @@
 </template>
 
 <script>
+
+
 import backgroundImage from "../components/background.vue";
 import Shop from "../components/Shop.vue";
+import timer from "../components/timer.vue";
 
 export default {
   components: {
     backgroundImage,
-    Shop
+    Shop,
+    timer
   },
   methods: {
+    
     beefCake() {
       switch(this.$store.state.trueclicks) {
   case 5:
@@ -61,8 +69,8 @@ export default {
     break;
   default:
     this.hurray = null
-  
-    console.log(this.$store.state.trueclicks+ " true clicks")
+    console.log(this.$store.state.clicks + " score")
+    console.log(this.$store.state.trueclicks + " true clicks")
 }
     },
     playSound(sound) {
@@ -128,7 +136,7 @@ export default {
           score: this.$store.state.clicks,
           id: this.$store.state.userId,
           trueclicks: this.$store.state.trueclicks,
-          
+          eff: this.$store.state.eff
         };
 
         webSocket.addEventListener("open", () => {

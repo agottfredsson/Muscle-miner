@@ -22,6 +22,7 @@
         <div id="topscore">
           <highscore></highscore>
         </div>
+        
       </div>
     </div>
   </div>
@@ -39,8 +40,8 @@ export default {
     ParticlesBg,
     Volume2Icon,
     VolumeXIcon,
-    highscore
-  },
+    highscore,
+    },
   created() {
     if (this.$store.state.audio) {
       this.playSound(require("../assets/audio/intro.mp3"));

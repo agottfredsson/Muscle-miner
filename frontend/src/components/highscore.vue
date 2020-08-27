@@ -4,15 +4,12 @@
       <div>
         <ul id="topscore" v-for="(user) in this.database" :key="user.userId">
               <li id="topScoreElement">
-                  <p id="name">Player: {{user.name}}</p> <p id="score">Lifted: {{user.score}} LBS  </p>
+                  <p id="name">Player: {{user.name}}</p> <p id="score">Lifted: {{user.score}} LBS </p> <p id="clicks">Clicks: {{user.trueclicks}}</p>  <p v-if="user.eff > 0" id="eff">BeastLevel: {{user.eff}}</p> 
               </li>
         </ul>
       </div>
 
 </template>
-
-
-
 
 <script>
 
@@ -63,17 +60,19 @@
     padding: 3px;
     border-radius: 10px;
     margin:0 0 7px 0; 
-    
   }
 
   li{
       background-color: rgba(255,72,196, 0.7);
       padding: 3px;
       border-radius: 9px;
-      
   }
 
   ul li{
       margin: 4px;
   }
+  #name{
+    font-size: 20px;
+  }
+
 </style>

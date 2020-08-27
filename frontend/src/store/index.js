@@ -7,17 +7,20 @@ export default new Vuex.Store({
   state: {
     clicks: 0,
     trueclicks: 0,
+    eff:0,
     userId: null,
     coins: 0,
     userState: 0,
     strength: 1,
     audio: true,
+    totalTime:0,
   },
   mutations: {
     increment(state) {
       //setInterval(function () { state.coins += 5; }, 3000);
       state.clicks += state.strength;
       state.trueclicks ++;
+      state.eff = Math.ceil(state.totalTime) + Math.ceil(state.strength)
       state.coins += 5;
     },
     coinValue(state, value) {
@@ -53,6 +56,7 @@ export default new Vuex.Store({
       state.userState = obj.userState;
       state.strength = obj.strength;
       state.audio = obj.audio;
+      state.eff = obj.eff;
     },
   },
   actions: {},
