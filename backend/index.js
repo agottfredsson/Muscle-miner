@@ -33,6 +33,16 @@ app.get("/topscore", (request, response) => {
     response.send(users);
   });
 });
+app.get("/topdog", (request, response) => {
+  database.all("SELECT name, score, trueclicks, eff FROM users WHERE score > 100 ORDER BY score DESC LIMIT 1").then((users) => {
+    response.send(users);
+  });
+});
+app.get("/top5", (request, response) => {
+  database.all("SELECT name, score, trueclicks, eff FROM users WHERE score > 100 ORDER BY score DESC LIMIT 5").then((users) => {
+    response.send(users);
+  });
+});
 
 app.post("/:userName", (request, response) => {
   database
