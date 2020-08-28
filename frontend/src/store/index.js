@@ -14,12 +14,14 @@ export default new Vuex.Store({
     strength: 1,
     audio: true,
     totalTime:0,
+    hurrayCounter:0,
   },
   mutations: {
     increment(state) {
       //setInterval(function () { state.coins += 5; }, 3000);
       state.clicks += state.strength;
       state.trueclicks ++;
+      state.hurrayCounter ++;
       state.eff = Math.ceil(state.totalTime) + Math.ceil(state.strength)
       state.coins += 5;
     },

@@ -22,9 +22,9 @@
                           this.totalTime++;
                           this.$store.state.totalTime ++
                         }, 1000);
-                        console.log(this.$store.state.totalTime +    " STORE TOTAL TID")
-                        console.log(this.timerCount)
-                        console.log(this.min + "min")
+                        // console.log(this.$store.state.totalTime +    " STORE TOTAL TID")
+                        // console.log(this.timerCount)
+                        // console.log(this.min + "min")
                     }if(this.timerCount>59){
                         this.min++ 
                         this.timerCount = 0

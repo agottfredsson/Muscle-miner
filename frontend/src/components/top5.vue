@@ -1,16 +1,12 @@
 
 <template>
-<div>
+  <div>
     <ul id="topscore" v-for="(user, index) in this.database" :key="user.userId">
              <li id="topScoreElement">
-             <span class="wordart">{{items[index]}} </span> <span id="name">Player: {{user.name}}</span> <p id="score">Lifted: {{user.score}} LBS </p> <p id="clicks">Clicks: {{user.trueclicks}}</p>  <p v-if="user.eff > 0" id="eff">BeastLevel: {{user.eff}}</p> 
+             <span class="wordart"> {{items[index]}} </span> <span id="name">Player: {{user.name}}</span> <p id="score">Lifted: {{user.score}} LBS </p> <p id="clicks">Clicks: {{user.trueclicks}}</p>  <p v-if="user.eff > 0" id="eff">BeastLevel: {{user.eff}}</p> 
       </li>
     </ul>
   </div>
-       
-     
-
-
 </template>
 
 <script>
@@ -25,7 +21,7 @@
         name: "highscore",
 
         created() {
-            fetch("http://localhost:3000/topscore")
+            fetch("http://localhost:3000/top5")
             .then((response) => response.json())
             .then((result) => {
                 this.database = result
@@ -41,7 +37,7 @@
             return{
                 database : [],
                 users :[],
-                items : [1,2,3,4,5,6,7,8,9,10]
+                items : [1,2,3,4,5]
                 
             }
             }
@@ -76,12 +72,8 @@
   ul li{
       margin: 4px;
   }
-  #topScoreElement{
-    font-size: 20px;
-
-  }
   #name{
-    font-size: 25px;
+    font-size: 20px;
     
   }
 
