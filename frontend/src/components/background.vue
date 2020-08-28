@@ -19,7 +19,7 @@
       </div>
       <img
         id="gif"
-        v-if="this.$store.state.trueclicks === 60"
+        v-if="this.$store.state.trueclicks === 70"
         src="../assets/gifs/cyrilleanton.gif"
       />
 

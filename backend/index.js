@@ -29,13 +29,19 @@ app.get("/", (request, response) => {
 });
 
 app.get("/topscore", (request, response) => {
-  database
-    .all(
-      "SELECT name, score, trueclicks FROM users WHERE score > 100 ORDER BY score DESC LIMIT 10"
-    )
-    .then((users) => {
-      response.send(users);
-    });
+  database.all("SELECT name, score, trueclicks, eff FROM users WHERE score > 100 ORDER BY score DESC LIMIT 10").then((users) => {
+    response.send(users);
+  });
+});
+app.get("/topdog", (request, response) => {
+  database.all("SELECT name, score, trueclicks, eff FROM users WHERE score > 100 ORDER BY score DESC LIMIT 1").then((users) => {
+    response.send(users);
+  });
+});
+app.get("/top5", (request, response) => {
+  database.all("SELECT name, score, trueclicks, eff FROM users WHERE score > 100 ORDER BY score DESC LIMIT 5").then((users) => {
+    response.send(users);
+  });
 });
 
 app.post("/:userName", (request, response) => {
@@ -63,10 +69,18 @@ app.ws("/", function (ws, req, res) {
   ws.on("message", function (obj) {
     const userObj = JSON.parse(obj);
 
-    database.run(
-      "UPDATE users SET score=(?), trueclicks=(?) WHERE userId=(?) ",
-      [userObj.score, userObj.trueclicks, userObj.id]
-    );
+    database
+      .run("UPDATE users SET score=(?), trueclicks=(?), eff=(?) WHERE userId=(?) ", [
+        userObj.score,
+        userObj.trueclicks,
+        userObj.eff,
+        userObj.id,
+        
+      ])
+      .then((users) => {
+        response.send(users);
+        response.end();
+      });
   });
 });
 

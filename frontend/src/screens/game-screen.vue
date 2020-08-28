@@ -1,21 +1,24 @@
 <template>
   <div id="content">
-    <background-image v-if="this.$store.state.trueclicks <= 20" image="2776.jpg" />
-    <background-image v-if="this.$store.state.trueclicks >= 20" image="background-2.png" />
-    <background-image v-if="this.$store.state.trueclicks >= 40" image="background-3.jpg" />
-    <background-image v-if="this.$store.state.trueclicks === 60" image="background-4-black.jpg" />
-    <background-image v-if="this.$store.state.trueclicks >= 61" image="background-4x2.png" />
-    <background-image v-if="this.$store.state.trueclicks >= 62" image="background-golds.jpg" />
+    <background-image v-if="this.$store.state.trueclicks <= 30" image="2776.jpg" />
+    <background-image v-if="this.$store.state.trueclicks >= 30" image="background-2.png" />
+    <background-image v-if="this.$store.state.trueclicks >= 50" image="background-3.jpg" />
+    <background-image v-if="this.$store.state.trueclicks === 70" image="background-4-black.jpg" />
+    <background-image v-if="this.$store.state.trueclicks >= 71" image="background-4x2.png" />
+    <background-image v-if="this.$store.state.trueclicks >= 72" image="background-golds.jpg" />
 
     <div id="shop">
       <Shop></Shop>
+      <timer></timer>
     </div>
 
+
+
     <div id="gameWindow">
-      <div id="enterBtn" v-if="this.$store.state.trueclicks === 61">
+      <div id="enterBtn" v-if="this.$store.state.trueclicks === 71">
         <b-button @click="clickMethod()" id="enterGymBtn" type="is-dark" size="is-large">Enter Gym</b-button>
       </div>
-      <div class="toggle" v-if="this.$store.state.trueclicks === 60">
+      <div class="toggle" v-if="this.$store.state.trueclicks === 70">
         <b-button @click="clickMethod()" id="advanceBtn" type="is-dark">Head over to Gold's Gym</b-button>
       </div>
 
@@ -23,8 +26,8 @@
         <transition name="slide-fade">
           <p id="indicator" v-if="!animation">+{{ this.$store.state.strength }} lbs</p>
         </transition>
-        <transition name="slide-fade">
-          <p id="yougo" v-if="!animation">{{beefCake()}}{{this.hurray}}</p>
+        <transition name="bounce">
+          <p id="yougo" v-if="this.$store.state.hurrayCounter > 49"> {{beefCake2()}} {{this.hurray}}</p>
         </transition>
         <div v-if="show" style="cursor: pointer">
           <img id="image" :src="getImgUrl(1)" @click="clickMethod()" />
@@ -39,34 +42,45 @@
 
 
 <script>
+
+
 import backgroundImage from "../components/background.vue";
 import Shop from "../components/Shop.vue";
+import timer from "../components/timer.vue";
 
 export default {
   components: {
     backgroundImage,
-    Shop
+    Shop,
+    timer
   },
   methods: {
-    beefCake() {
-      switch (this.$store.state.trueclicks) {
-        case 5:
-          this.hurray = "You BEEFCAKE bro!";
-          break;
-        case 10:
-          this.hurray = "You BEEFCAKE bro!";
-          break;
-        case 20:
-          this.hurray = "You BEEFCAKE bro!";
-          break;
-        case 30:
-          this.hurray = "Dayum look at those GLUTES!";
-          break;
-        default:
-          this.hurray = null;
 
-          console.log(this.$store.state.trueclicks + " true clicks");
-      }
+    beefCake2(){
+      
+      this.hurray = this.cheer[Math.floor(Math.random() * this.cheer.length)]
+
+    },
+    
+    beefCake() {
+      switch(this.$store.state.trueclicks) {
+  case 5:
+    this.hurray = "You BEEFCAKE bro!"
+    break;
+  case 10:
+    this.hurray = "SWEET"
+    break;
+  case 20:
+    this.hurray = "YOOOOOOOO"
+    break;
+  case 30:
+    this.hurray = "Dayum look at those GLUTES!"
+    break;
+  default:
+    this.hurray = null
+    // console.log(this.$store.state.clicks + " score")
+    // console.log(this.$store.state.trueclicks + " true clicks")
+}
     },
     playSound(sound) {
       if (sound) {
@@ -77,7 +91,7 @@ export default {
 
     levelup() {
       switch (this.$store.state.trueclicks) {
-        case 19:
+        case 29:
           this.$store.commit("changeStrength", 5);
           this.$store.commit("levelBonus", 100);
 
@@ -90,7 +104,7 @@ export default {
           });
 
           break;
-        case 39:
+        case 49:
           this.$store.commit("changeStrength", 10);
           this.$store.commit("levelBonus", 200);
 
@@ -113,6 +127,11 @@ export default {
     },
     clickMethod() {
       this.show = !this.show;
+      if(this.$store.state.hurrayCounter < 50){
+        this.$store.state.hurrayCounter ++;
+      }else{this.$store.state.hurrayCounter = 0;}
+      
+      console.log(this.$store.state.hurrayCounter + "HURRAYCOUNTER");
 
       if (this.$store.state.audio) {
         if (this.sound === 0 || this.sound === 8) {
@@ -139,7 +158,8 @@ export default {
         const obj = {
           score: this.$store.state.clicks,
           id: this.$store.state.userId,
-          trueclicks: this.$store.state.trueclicks
+          trueclicks: this.$store.state.trueclicks,
+          eff: this.$store.state.eff
         };
 
         webSocket.addEventListener("open", () => {
@@ -173,6 +193,7 @@ export default {
         ["/vac-1.png", "/vac-2.png"]
       ],
       hurray: null,
+      cheer:["You BEEFCAKE bro!", "Dayum look at those GLUTES!", "SKIP LEGDAY FFS", "WoooooooT!?", "HERCULES, HERCULES!!", "YOU ROCK!", "HARD AS STONE", "OMG", "BEASTMODE!!!!"],
       toggle: false
     };
   }
@@ -234,10 +255,10 @@ export default {
   opacity: 0;
 }
 .bounce-enter-active {
-  animation: bounce-in 1.5s;
+  animation: bounce-in 1.8s;
 }
 .bounce-leave-active {
-  animation: bounce-in 1.5s reverse;
+  animation: bounce-in 1.8s reverse;
 }
 @keyframes bounce-in {
   0% {

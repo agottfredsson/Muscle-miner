@@ -1,14 +1,17 @@
 
 <template>
-<div>
-    <ul id="topscore" v-for="(user, index) in this.database" :key="user.userId">
-             <li id="topScoreElement">
-             <span class="wordart">{{items[index]}} </span> <span id="name">Player: {{user.name}}</span> <p id="score">Lifted: {{user.score}} LBS </p> <p id="clicks">Clicks: {{user.trueclicks}}</p>  <p v-if="user.eff > 0" id="eff">BeastLevel: {{user.eff}}</p> 
-      </li>
-    </ul>
-  </div>
-       
-     
+
+  
+      <div>
+        <transition name="slide-fade">
+          <ul id="topscore" v-for="(user) in this.database" :key="user.userId">
+                <li id="topScoreElement">
+                  <img id="logo" src="../assets/images/pokale.png" />  <p id="name">Player: {{user.name}}</p> <p id="score">Lifted: {{user.score}} LBS </p> <p id="clicks">Clicks: {{user.trueclicks}}</p>  <p v-if="user.eff > 0" id="eff">BeastLevel: {{user.eff}}</p> 
+                </li>   
+          </ul>
+        </transition>
+      </div>
+
 
 
 </template>
@@ -25,7 +28,7 @@
         name: "highscore",
 
         created() {
-            fetch("http://localhost:3000/topscore")
+            fetch("http://localhost:3000/topdog")
             .then((response) => response.json())
             .then((result) => {
                 this.database = result
@@ -41,11 +44,9 @@
             return{
                 database : [],
                 users :[],
-                items : [1,2,3,4,5,6,7,8,9,10]
                 
             }
-            }
-             
+          },    
       }
 </script>
 
@@ -53,11 +54,21 @@
 
 
 <style scoped>
+
+#logo{
+  width: 20%;
+  height:20%;
+  position: relative;
+  float: left;
+  left: 20px;
+  top: 20px;
+}
   @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 
   div{
       font-family: 'Audiowide', cursive;
-      margin-top: 60px;
+      width: 40%;
+      margin:auto;
   }
   
   ul {
@@ -77,15 +88,13 @@
       margin: 4px;
   }
   #topScoreElement{
-    font-size: 20px;
-
+    font-size: 30px;
   }
-  #name{
-    font-size: 25px;
+    #name{
+    font-size: 35px;
     
   }
-
-.slide-fade-enter-active {
+    .slide-fade-enter-active {
   transition: all 1.3s ease;
 }
 .slide-fade-leave-active {
@@ -96,14 +105,16 @@
   transform: translateY(10px);
   opacity: 0;
 }
+
 .wordart {
 position: relative;
 float: left;
-left: 30px;
-top: 15px;
+left: 60px;
+top: 20px;
+
  
   
-  font-size: 30px;
+  font-size: 56px;
   font-family: Impact, sans-serif;
   color: transparent;
   background: linear-gradient(to bottom left, #fee601, #fe4201);
@@ -115,5 +126,6 @@ top: 15px;
     4px 5px 0.35px #c14d00, 6px 5px 0.35px #813300, 5px 6px 0.35px #c14d00,
     7px 6px 0.35px #813300, 6px 7px 0.35px #c14d00;
 }
+
 
 </style>
